@@ -4,7 +4,9 @@ import json
 import requests
 import socket
 import sys
-
+from tabulate import tabulate
+import pandas as pd
+import numpy as np
 
 @contextmanager
 def gc2():
@@ -64,7 +66,6 @@ def convert_types(df, print_info = False):
         print(f'New Memory Usage: {round(new_memory / 1e9, 2)} gb.')
     return df
 
-
 def df_null_stat(df, thres_null=0.5):
     """
     args:
@@ -83,3 +84,6 @@ def df_null_stat(df, thres_null=0.5):
     cols_drop = list(df_null[df_null.null_ratio > thres_null].index)
 
     return df_null, cols_drop
+
+def df2md(df):
+    print(tabulate(df, tablefmt="pipe", headers="keys"))
